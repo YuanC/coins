@@ -1,5 +1,4 @@
 const https = require('https');
-const util = require('util');
 const cliff = require('cliff');
 
 const start_time = (new Date).getTime();
