@@ -5,7 +5,7 @@ const cliff = require('cliff');
 const start_time = (new Date).getTime();
 const options = {
   hostname: 'api.coinmarketcap.com',
-  path: '/v1/ticker/?convert=CAD&limit=100'
+  path: '/v1/ticker/?convert=CAD'
 };
 
 let coins_data;
