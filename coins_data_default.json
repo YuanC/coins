@@ -1,0 +1,17 @@
+{
+  "coins": [
+    {
+      "id": "ethereum",
+      "balance": 3
+    },
+    {
+      "id": "bitcoin",
+      "balance": 2
+    }
+  ],
+  "purchases": [
+    100,
+    200,
+    300
+  ]
+}
