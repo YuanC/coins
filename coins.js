@@ -37,15 +37,14 @@ https.get(options, function(res) {
       total_value += value;
     });
 
-    let rows = [['%', 'Name', 'Symbol', 'Units', 'Price USD(CAD)', 'Value USD(CAD)']];
+    let rows = [['%', 'Name', 'Units', 'Price USD(CAD)', 'Value USD(CAD)']];
     coins_data.coins.forEach(coin => {
       let temp_coin = market_data.find(c => c.id === coin.id);
       let value = temp_coin.price_cad*coin.balance;
 
       rows.push([
         Math.round(value*100 / total_value),
-        temp_coin.name,
-        temp_coin.symbol,
+        temp_coin.symbol + ' (' + temp_coin.name + ')',
         coin.balance.toFixed(3),
         temp_coin.price_usd + ' (' + temp_coin.price_cad + ')',
         Math.round(value*conversion_rate) + ' (' + Math.round(value) + ')'
