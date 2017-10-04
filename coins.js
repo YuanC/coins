@@ -4,8 +4,7 @@ const cliff = require('cliff');
 const start_time = (new Date).getTime();
 const options = {
   hostname: 'api.coinmarketcap.com',
-  path: '/v1/ticker/?convert=CAD'
-};
+  path: '/v1/ticker/?convert=CAD'};
 
 let coins_data;
 try {
@@ -27,7 +26,8 @@ https.get(options, function(res) {
     let market_data = JSON.parse(res_body);
     // console.log(market_data[0]);
 
-    let conversion_rate = parseFloat(market_data[0].price_usd) / parseFloat(market_data[0].price_cad); 
+    let conversion_rate = parseFloat(
+      market_data[0].price_usd) / parseFloat(market_data[0].price_cad); 
 
     let total_value = 0;
     coins_data.coins.forEach(coin => {
@@ -39,6 +39,7 @@ https.get(options, function(res) {
 
     let rows = [['%', 'Name', 'Units', 'Price USD(CAD)', 'Value USD(CAD)']];
     coins_data.coins.forEach(coin => {
+
       let temp_coin = market_data.find(c => c.id === coin.id);
       let value = temp_coin.price_cad*coin.balance;
 
@@ -52,17 +53,25 @@ https.get(options, function(res) {
     });
 
     rows.sort((a, b) => b[0] - a[0]);
-    console.log(cliff.stringifyRows(rows,['cyan', 'blue', 'green', 'yellow', 'magenta', 'grey']));
-    
-    let total_spent = coins_data.purchases.reduce((total, num) => { return total + num; });
-    console.log('\nTotal spent:  %d CAD  %d USD',
-      Math.round(total_spent),
-      Math.round(total_spent*conversion_rate)
+    console.log(
+      cliff.stringifyRows(
+        rows, ['cyan', 'blue', 'green', 'yellow', 'magenta', 'grey']
+      ) + '\n'
     );
+
     console.log('Total value:  %d CAD  %d USD',
       Math.round(total_value),
       Math.round(total_value*conversion_rate)
     );
+    
+    let total_spent = coins_data.purchases.reduce(
+      (total, num) => { return total + num; });
+    
+    console.log('Total spent:  %d CAD  %d USD',
+      Math.round(total_spent),
+      Math.round(total_spent*conversion_rate)
+    );
+
     console.log('ROI:  %d CAD  %d USD (%d%)',
       Math.round(total_value - total_spent),
       Math.round(total_value*conversion_rate - total_spent*conversion_rate),
